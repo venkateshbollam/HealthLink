@@ -38,6 +38,8 @@ jobs:
       - name: Build and Push image
         run: |
           IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.AR_REPO }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+          IMAGE_URI="${IMAGE_URI// /}"  # Remove any spaces
+          echo "DEBUG: IMAGE_URI=$IMAGE_URI"
           docker build -t "$IMAGE_URI" .
           docker push "$IMAGE_URI"
           echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
