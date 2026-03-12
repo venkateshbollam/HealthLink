@@ -46,7 +46,12 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy "${{ env.SERVICE_NAME }}" \
+          # normalize and debug service name
+          SERVICE_NAME="${{ env.SERVICE_NAME }}"
+          SERVICE_NAME="${SERVICE_NAME// /}"
+          echo "DEBUG: SERVICE_NAME=$SERVICE_NAME"
+
+          gcloud run deploy "$SERVICE_NAME" \
             --image "${{ env.IMAGE_URI }}" \
             --platform managed \
             --region "${{ env.REGION }}" \
