@@ -1,7 +1,7 @@
 # Multi-stage Dockerfile for HealthLink
 # Optimized for Google Cloud Run deployment
 
-FROM python:3.10-slim as builder
+FROM python:3.10-slim AS builder
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \

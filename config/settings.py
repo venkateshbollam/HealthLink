@@ -5,6 +5,7 @@ All settings loaded from environment variables with sensible defaults.
 from typing import List
 from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
+import os
 
 
 class Settings(BaseSettings):
@@ -45,7 +46,8 @@ class Settings(BaseSettings):
 
     # API Configuration
     api_host: str = "0.0.0.0"
-    api_port: int = 8000
+   # in config/settings.py
+    api_port: int = int(os.getenv("PORT", 8080))
     api_reload: bool = True
     cors_origins: List[str] = ["http://localhost:3000", "http://localhost:8501"]
 
