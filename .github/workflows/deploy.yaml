@@ -37,17 +37,17 @@ jobs:
 
       - name: Build and Push image
         run: |
-          IMAGE_URI=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.AR_REPO }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          docker build -t $IMAGE_URI .
-          docker push $IMAGE_URI
+          IMAGE_URI="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.AR_REPO }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+          docker build -t "$IMAGE_URI" .
+          docker push "$IMAGE_URI"
           echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy ${{ env.SERVICE_NAME }} \
-            --image $IMAGE_URI \
+          gcloud run deploy "${{ env.SERVICE_NAME }}" \
+            --image "${{ env.IMAGE_URI }}" \
             --platform managed \
-            --region ${{ env.REGION }} \
+            --region "${{ env.REGION }}" \
             --allow-unauthenticated \
             --memory 2Gi \
             --cpu 2 \
